@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="zh-TW">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>閱星曈X4 待機畫面生成器</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./src/style.css">
+</head>
+
+<body>
+  <div id="app">
+    <header>
+      <h1>閱星曈X4 待機畫面生成器</h1>
+    </header>
+    <main class="editor-container">
+      <aside class="sidebar">
+        <div class="card tool-panel">
+          <h2>工具箱</h2>
+          <div class="tool-group">
+            <button id="btn-upload-bg">上傳背景圖</button>
+            <button id="btn-upload-overlay">上傳疊加圖</button>
+            <button id="btn-add-text">新增文字</button>
+          </div>
+
+          <div id="text-properties" class="tool-group"
+            style="display: none; border-top: 1px solid #eee; padding-top: 10px;">
+            <label>字體</label>
+            <select id="font-family">
+              <option value="Noto Sans TC">Noto Sans TC</option>
+              <option value="Arial">Arial</option>
+              <option value="Times New Roman">Times New Roman</option>
+              <option value="Courier New">Courier New</option>
+            </select>
+
+            <label>大小</label>
+            <input type="number" id="font-size" value="40" min="8" max="200">
+
+            <label>顏色</label>
+            <input type="color" id="text-color" value="#333333">
+
+            <div style="display: flex; gap: 5px; margin-top: 5px;">
+              <button id="btn-bold" style="font-weight: bold;">B</button>
+              <button id="btn-italic" style="font-style: italic;">I</button>
+            </div>
+          </div>
+
+          <div class="tool-group">
+            <h3>編輯控制</h3>
+            <div style="display: flex; gap: 5px;">
+              <button id="btn-undo">↶ 還原</button>
+              <button id="btn-redo">↷ 重做</button>
+            </div>
+          </div>
+
+          <div class="tool-group">
+            <h3>旋轉與排列</h3>
+            <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+              <button id="btn-rotate-left">⟲ 左轉90°</button>
+              <button id="btn-rotate-right">⟳ 右轉90°</button>
+              <button id="btn-vertical-text">直式文字</button>
+            </div>
+          </div>
+
+          <div class="tool-group">
+            <h3>範本</h3>
+            <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+              <button id="tpl-top-bottom">上圖下文</button>
+              <button id="tpl-center-text">純文字</button>
+              <button id="tpl-empty">清空</button>
+            </div>
+          </div>
+
+          <div class="tool-group">
+            <h3>重製</h3>
+            <div style="display: flex; gap: 5px;">
+              <button id="btn-reset-layer">重製圖層</button>
+              <button id="btn-reset-all" style="color: red;">全部重製</button>
+            </div>
+          </div>
+
+          <div class="tool-group">
+            <label>
+              <input type="checkbox" id="chk-grayscale"> 灰階模式
+            </label>
+            <label>
+              <input type="checkbox" id="chk-dither" disabled> 抖動處理
+            </label>
+          </div>
+          <div class="tool-group">
+            <div style="display: flex; gap: 10px;">
+              <button id="btn-preview" style="flex: 1;">預覽</button>
+              <button id="btn-download" class="primary" style="flex: 1;">下載圖片</button>
+            </div>
+          </div>
+        </div>
+        <div class="card layer-panel">
+          <h2>圖層</h2>
+          <ul id="layer-list"></ul>
+        </div>
+      </aside>
+      <section class="canvas-area">
+        <div class="canvas-wrapper">
+          <canvas id="c"></canvas>
+        </div>
+      </section>
+    </main>
+
+    <!-- Preview Modal -->
+    <div id="preview-modal" class="modal" style="display: none;">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>預覽</h2>
+        <div style="text-align: center;">
+          <img id="preview-img" style="max-width: 100%; max-height: 80vh; border: 1px solid #ddd;">
+        </div>
+        <div style="margin-top: 20px; text-align: center;">
+          <button id="btn-download-modal" class="primary">下載圖片</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="./src/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+/* 自訂字型載入設定
+ * 使用方式：將字型檔放到專案根目錄的 `fonts/` 目錄下
+ * 支援 woff2/woff/ttf，建議使用 woff2；若僅有 ttf 也可使用
+ * 接著修改下面的 src 路徑與 font-family 名稱
+ * 於「文字設定」下拉選單選擇對應名稱即可套用
+ */
+
+/* 範例一：CustomFontA Regular/Bold */
+@font-face {
+  font-family: 'CustomFontA';
+  src: url('../fonts/CustomFontA-Regular.woff2') format('woff2'),
+       url('../fonts/CustomFontA-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'CustomFontA';
+  src: url('../fonts/CustomFontA-Bold.woff2') format('woff2'),
+       url('../fonts/CustomFontA-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 範例二：CustomFontB Regular */
+@font-face {
+  font-family: 'CustomFontB';
+  src: url('../fonts/CustomFontB-Regular.woff2') format('woff2'),
+       url('../fonts/CustomFontB-Regular.woff') format('woff'),
+       url('../fonts/CustomFontB-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 以下為使用者提供字型（TTF） */
+@font-face {
+  font-family: '辰宇落雁體2.0Thin';
+  src: url('../fonts/ChenYuluoyan-2.0-Thin.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'jfopen 粉圓 2.1';
+  src: url('../fonts/jf-openhuninn-2.1.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: '苦累蛙圓體 CJKTC-SemiBold';
+  src: url('../fonts/KurewaGothicCjkTc-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: '俊羽凰體SemiBold';
+  src: url('../fonts/YuPearl-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: '芫荽';
+  src: url('../fonts/Iansui-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}

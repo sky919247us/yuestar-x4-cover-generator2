@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>電子書待機畫面 網頁版生成器</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans:wght@400;700&family=Noto+Sans+TC:wght@400;700&family=Source+Sans+3:wght@400;700&family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles/style.css" />
+  <link rel="stylesheet" href="./styles/fonts.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.2.4/fabric.min.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <h1>電子書待機畫面 網頁版生成器</h1>
+    <p class="subtitle">預設 閱星曈尺寸480×800，支援圖片/文字編輯、灰階與抖動</p>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <!-- 解析度：移至最上方 -->
+      <section class="card">
+        <h2>解析度</h2>
+        <div class="grid-2">
+          <div class="field">
+            <label for="resWidthInput">寬度</label>
+            <input id="resWidthInput" type="number" min="200" max="3000" value="480" />
+          </div>
+          <div class="field">
+            <label for="resHeightInput">高度</label>
+            <input id="resHeightInput" type="number" min="200" max="3000" value="800" />
+          </div>
+        </div>
+        <div class="field">
+          <button id="applyResolutionBtn" class="btn secondary">套用解析度</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>素材與範本</h2>
+        <div class="field">
+          <label class="btn" for="primaryImageInput">上傳主要圖片</label>
+          <input id="primaryImageInput" type="file" accept=".jpg,.jpeg,.png,.bmp,.webp" hidden />
+        </div>
+        <div class="field">
+          <label class="btn" for="overlayImageInput">上傳疊圖（建議 .png）</label>
+          <input id="overlayImageInput" type="file" accept=".png,.jpg,.jpeg,.bmp,.webp" hidden />
+        </div>
+        <div class="field">
+          <label for="templateSelect">範本</label>
+          <select id="templateSelect">
+            <option value="none">無</option>
+            <option value="top-image-bottom-text">上圖下文</option>
+            <option value="left-image-right-text">左圖右文</option>
+            <option value="center-text">純文字置中</option>
+            <option value="fullscreen-image">全螢幕圖片</option>
+          </select>
+          <button id="applyTemplateBtn" class="btn secondary">套用範本</button>
+        </div>
+        <div class="field">
+          <button id="addTextBtn" class="btn">新增文字</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>編輯控制</h2>
+        <div class="grid-3">
+          <button id="rotateLeftBtn" class="btn icon" title="向左旋轉90°">⟲ 90°</button>
+          <button id="rotateRightBtn" class="btn icon" title="向右旋轉90°">⟳ 90°</button>
+          <button id="rotate180Btn" class="btn icon" title="旋轉180°">↻ 180°</button>
+        </div>
+        <div class="field">
+          <label for="scaleSlider">縮放（選中物件）：</label>
+          <input id="scaleSlider" type="range" min="10" max="500" value="100" />
+        </div>
+        <div class="field toggle">
+          <label>
+            <input id="grayscaleToggle" type="checkbox" /> 轉換為灰階
+          </label>
+        </div>
+        <div class="field toggle">
+          <label>
+            <input id="ditherToggle" type="checkbox" disabled /> 抖動效果（灰階啟用時可用）
+          </label>
+        </div>
+        <div class="field">
+          <button id="resetCurrentBtn" class="btn warning">重製目前圖層</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>文字設定</h2>
+        <div class="field">
+          <label for="fontSelect">字體</label>
+          <select id="fontSelect">
+            <option value="Noto Sans">Noto Sans</option>
+            <option value="Noto Sans TC">Noto Sans TC</option>
+            <option value="Source Sans 3">Source Sans 3</option>
+            <option value="Noto Serif">Noto Serif</option>
+            <option value="Inter">Inter</option>
+            <!-- 自訂字型：於 styles/fonts.css 定義後即可使用 -->
+            <option value="CustomFontA">CustomFontA</option>
+            <option value="CustomFontB">CustomFontB</option>
+            <!-- 使用者字型 -->
+            <option value="辰宇落雁體2.0Thin">辰宇落雁體2.0Thin</option>
+            <option value="jfopen 粉圓 2.1">jfopen 粉圓 2.1</option>
+            <option value="苦累蛙圓體 CJKTC-SemiBold">苦累蛙圓體 CJKTC-SemiBold</option>
+            <option value="俊羽凰體SemiBold">俊羽凰體SemiBold</option>
+            <option value="芫荽">芫荽</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="fontSizeInput">大小</label>
+          <input id="fontSizeInput" type="number" min="8" max="200" value="28" />
+        </div>
+        <div class="field">
+          <label>排版方向</label>
+          <div id="textDirectionButtons" class="btn-group grid-2">
+            <button id="textDirHorizontalBtn" class="btn secondary" data-dir="horizontal">橫排</button>
+            <button id="textDirVerticalBtn" class="btn secondary" data-dir="vertical">直排</button>
+          </div>
+        </div>
+        <div class="grid-3">
+          <button id="boldBtn" class="btn secondary">粗體</button>
+          <button id="italicBtn" class="btn secondary">斜體</button>
+          <input id="fontColorInput" type="color" value="#000000" />
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>圖層</h2>
+        <ul id="layersList" class="layers"></ul>
+      </section>
+
+      <!-- 解析度卡片已移至頂部 -->
+
+      <section class="card">
+        <h2>重製與輸出</h2>
+        <div class="grid-2">
+          <button id="resetAllBtn" class="btn warning">全部重製</button>
+          <button id="previewBtn" class="btn">預覽</button>
+        </div>
+        <div class="field">
+          <button id="downloadBtn" class="btn primary">下載 JPG</button>
+        </div>
+      </section>
+    </aside>
+
+    <section class="canvas-wrap">
+      <div class="canvas-card">
+        <canvas id="x4-canvas" width="480" height="800"></canvas>
+      </div>
+      <p class="hint">提示：選中物件可用滑鼠拖曳移動；滾輪可縮放。</p>
+    </section>
+  </main>
+
+  <!-- 預覽 Modal -->
+  <dialog id="previewDialog">
+    <div class="dialog-card">
+      <h3>輸出預覽（<span id="previewResLabel">480×800</span>）</h3>
+      <img id="previewImage" alt="預覽" />
+      <div class="field">
+        <label for="filenameInput">檔名</label>
+        <input id="filenameInput" type="text" value="X4-standby" />
+      </div>
+      <div class="grid-2">
+        <button id="closePreviewBtn" class="btn secondary">關閉</button>
+        <button id="confirmDownloadBtn" class="btn primary">下載</button>
+      </div>
+    </div>
+  </dialog>
+
+  <input id="placeholderImageInput" type="file" accept=".jpg,.jpeg,.png,.bmp,.webp" hidden />
+
+  <script src="./js/app.js"></script>
+  <script src="./js/canvas.js"></script>
+  <script src="./js/upload.js"></script>
+  <script src="./js/templates.js"></script>
+  <script src="./js/text.js"></script>
+  <script src="./js/layers.js"></script>
+  <script src="./js/touch.js"></script>
+  <script src="./js/filters.js"></script>
+  <script src="./js/export.js"></script>
+</body>
+</html>
